@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
+const fileUpload = require('express-fileupload');
 
 module.exports = (app, config) => {
     // View engine setup.
@@ -23,6 +24,10 @@ module.exports = (app, config) => {
     // For user validation we will use passport module.
     app.use(passport.initialize());
     app.use(passport.session());
+
+    // use express fileupload to handle multipart from data
+    app.use(fileUpload());
+
 
     app.use((req, res, next) => {
         if(req.user){
