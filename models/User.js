@@ -28,13 +28,9 @@ userSchema.method ({
             return false;
         }
 
-        let id = article.author;
+        let isAuthor = article.author.equals(this.id);
 
-        if (article.author.id) {
-            id = article.author.id;
-        }
-
-        return this.id;
+        return isAuthor;
     },
 
     isInRole: function (roleName) {

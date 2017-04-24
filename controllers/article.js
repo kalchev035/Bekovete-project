@@ -38,10 +38,10 @@ module.exports = {
                     console.log(err.message);
                 }
             });
+            articleArgs.imagePath = `/images/${image.name}`;
         }
 
         articleArgs.author = req.user.id;
-        articleArgs.imagePath = `/images/${image.name}`;
 
         Article.create(articleArgs).then(article => {
             req.user.articles.push(article.id);
@@ -60,23 +60,37 @@ module.exports = {
         let id = req.params.id;
 
         Article.findById(id).populate('author').then(article => {
-           res.render('article/details', article);
+            if (!req.user) {
+                res.render('article/details', {article: article, isUserAuthorized: false});
+                return;
+            }
+
+            req.user.isInRole('Admin').then(isAdmin => {
+                let isUserAuthorized = isAdmin || req.user.isAuthor(article);
+
+                res.render('article/details', {article: article, isUserAuthorized: isUserAuthorized});
+            });
         });
     },
 
     editGet: (req,res) => {
-        let id = req.params.id;
+        if (req.user !== undefined) {
+            let id = req.params.id;
+            Article.findById(id).then(article => {
+                req.user.isInRole('Admin').then(isAdmin => {
+                    if (!isAdmin && !req.user.isAuthor(article)) {
 
-        Article.findById(id).then(article => {
-            req.user.isInRole('Admin').then(isADmin => {
-                if (req.user === undefined || !req.user.isAuthor(article)) {
-                    res.render('home/index', {error: 'You cannot edit this article!'});
-                    return;
-                }
+                        res.redirect(`/`);
+                        return;
+                    }
 
-                res.render('article/edit', article);
+                    res.render('article/edit', article);
+                });
             });
-        });
+        }
+        else {
+            res.render('user/login', {error: 'You should be logged in to edit articles!'});
+        }
     },
 
     editPost: (req,res) => {
@@ -106,8 +120,23 @@ module.exports = {
     deleteGet: (req,res) => {
         let id = req.params.id;
 
+        if (!req.isAuthenticated()) {
+            let returnUrl = `/article/delete/${id}`;
+            req.session.returnUrl = returnUrl;
+
+            res.redirect('/user/login');
+            return;
+        }
+
         Article.findById(id).then(article => {
-            res.render('article/delete', article);
+            req.user.isInRole('Admin').then(isAdmin => {
+                if (!isAdmin && !req.user.isAuthor(article)) {
+                    res.redirect('/');
+                    return;
+                }
+
+                res.render('article/delete', article);
+            });
         });
     },
 
