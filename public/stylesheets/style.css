@@ -7056,3 +7056,14 @@ article .author  {
 article .author  {
   content: '\2014 \00A0';
 }
+
+
+hr {
+  display: block;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 2px;
+}
