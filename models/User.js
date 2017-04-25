@@ -54,11 +54,14 @@ module.exports.seedAdmin = () => {
     User.findOne({email: email}).then(admin => {
         if (!admin) {
             Role.findOne({name: 'Admin'}).then(role => {
+                if (!role) {
+                    return;
+                }
                 let salt = encryption.generateSalt();
                 let passwordHash = encryption.hashPassword('admin123', salt);
 
                 let roles = [];
-                roles.push(role.id);
+                    roles.push(role.id);
 
                 let user = {
                     email: email,
@@ -70,7 +73,7 @@ module.exports.seedAdmin = () => {
                 };
 
                 User.create(user).then(user => {
-                    role.users.push(user.id);
+                        role.users.push(user.id);
                     role.save(err => {
                         if (err) {
                             console.log(err.message);

@@ -11,11 +11,11 @@
                 </p>
 
                 {{#if article.imagePath}}
-                <img src="{{article.imagePath}}" width="350px" alt="Article Image"/>
+                <img src="{{article.imagePath}}" width="350px" style="max-width: 100%;" alt="Article Image"/>
                 {{/if}}
 
                 <small class="author">
-                    Posted by - {{article.author.fullName}}
+                    Posted by {{article.author.fullName}}
                 </small>
 
                 <footer>
