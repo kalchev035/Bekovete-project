@@ -9,7 +9,8 @@ let userSchema = mongoose.Schema(
         fullName: {type: String, required: true},
         articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'Article'}],
         roles: [{type: mongoose.Schema.Types.ObjectId, ref: 'Role'}],
-        salt: {type: String, required: true}
+        salt: {type: String, required: true},
+        imagePath: {type: String}
     }
 );
 

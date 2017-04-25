@@ -8,7 +8,9 @@
 
                       </div>
                       <div class="avatar">
-                          <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                          {{#if user.imagePath}}
+                              <img src="{{user.imagePath}}" width="350px" style="max-width: 100%;" alt="Article Image"/>
+                          {{/if}}
                       </div>
                       <div class="info">
                           <div class="title">

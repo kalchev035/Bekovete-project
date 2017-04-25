@@ -51,13 +51,28 @@ module.exports = {
                 Role.findOne({name: 'User'}).then(role => {
                     roles.push(role.id);
 
+                    let image = req.files.image;
+
+                    if(image){
+                        let filename = image.name;
+
+                        image.mv(`./public/images/${filename}`, err =>{
+                            if(err){
+                                console.log(err.message);
+                            }
+                        });
+                        registerArgs.imagePath = `/images/${image.name}`;
+                    }
+
                     let userObject = {
                         email: registerArgs.email,
                         passwordHash: passwordHash,
                         fullName: registerArgs.fullName,
                         salt: salt,
-                        roles: roles
+                        roles: roles,
+                        imagePath: registerArgs.imagePath
                     };
+
 
                     User.create(userObject).then(user => {
 
