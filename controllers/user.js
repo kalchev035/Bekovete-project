@@ -7,6 +7,28 @@ module.exports = {
         res.render('user/register');
     },
 
+    detailsGet: (req, res) => {
+        let id = req.params.id;
+
+        User.findById(id).then(allArticles => {
+            articleColletion = allArticles.articles;
+
+            function countProperties(articleColletion) {
+                var count = 0;
+
+                for(let i = 0; i < articleColletion.length; i++) {
+                    ++count;
+                }
+
+                return count;
+            }
+
+            res.render('user/details', {count: countProperties(articleColletion)})
+
+
+        })
+    },
+
     registerPost:(req, res) => {
         let registerArgs = req.body;
 
