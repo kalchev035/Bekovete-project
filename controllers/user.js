@@ -23,8 +23,12 @@ module.exports = {
                 return count;
             }
 
-            res.render('user/details', {count: countProperties(articleColletion)})
+            if (!req.isAuthenticated()) {
+                res.render('user/login', {error: 'Please login to view your profile!'})
+                return;
+            }
 
+            res.render('user/details', {count: countProperties(articleColletion)})
 
         })
     },
@@ -62,6 +66,10 @@ module.exports = {
                             }
                         });
                         registerArgs.imagePath = `/images/${image.name}`;
+                    }
+                    else {
+                        let filename = 'unknown.jpeg';
+                        registerArgs.imagePath = `/images/${filename}`;
                     }
 
                     let userObject = {

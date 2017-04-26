@@ -2,6 +2,10 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 well">
         <div class="col-md-12">
             <article>
+                {{#if article.imagePath}}
+                    <img src="{{article.imagePath}}" width="350px" class="img-responsive center-block" style="max-width: 100%;" alt="Article Image"/>
+                {{/if}}
+
                 <header>
                     <h2>{{article.title}}</h2>
                 </header>
@@ -10,12 +14,13 @@
                     {{article.content}}
                 </p>
 
-                {{#if article.imagePath}}
-                <img src="{{article.imagePath}}" width="350px" style="max-width: 100%;" alt="Article Image"/>
-                {{/if}}
-
                 <small class="author">
-                    Posted by {{article.author.fullName}}
+                    Posted by {{article.author.fullName}} on {{article.date}}
+                </small>
+                <small class="author">
+                    {{#if article.editDate}}
+                        Last edited on {{article.editDate}}
+                    {{/if}}
                 </small>
 
                 <footer>

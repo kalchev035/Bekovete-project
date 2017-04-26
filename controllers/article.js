@@ -1,5 +1,5 @@
 /**
- * Created by Mecho on 22.4.2017 г..
+ * Created by Kamen on 22.4.2017 г..
  */
 const Article = require('mongoose').model('Article');
 
@@ -106,11 +106,15 @@ module.exports = {
             errorMsg = 'Article content cannot be empty!';
         }
 
+        let dateFormat = require('dateformat');
+        let now = new Date();
+        let dateToStore = dateFormat(now, "mmmm dS, yyyy, h:MM:ss TT");
+
         if (errorMsg) {
             res.render('article/edit', {error: errorMsg});
         }
         else {
-            Article.update({_id: id}, {$set: {title: articleArgs.title, content: articleArgs.content}})
+            Article.update({_id: id}, {$set: {title: articleArgs.title, content: articleArgs.content, editDate: dateToStore}})
                 .then(updateStatus => {
                     res.redirect(`/article/details/${id}`);
                 });

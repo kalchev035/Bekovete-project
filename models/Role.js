@@ -1,5 +1,5 @@
 /**
- * Created by Mecho on 23.4.2017 г..
+ * Created by Kamen on 23.4.2017 г..
  */
 const mongoose = require('mongoose');
 
