@@ -70,7 +70,8 @@ module.exports.seedAdmin = () => {
                     fullName: 'Admin',
                     articles: [],
                     salt: salt,
-                    roles: roles
+                    roles: roles,
+                    imagePath: `/images/admin.jpeg`
                 };
 
                 User.create(user).then(user => {
