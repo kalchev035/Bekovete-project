@@ -7067,3 +7067,7 @@ hr {
   border-style: inset;
   border-width: 2px;
 }
+
+.bekovete {
+  white-space:pre-wrap;
+}

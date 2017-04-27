@@ -9,7 +9,7 @@
     <script src="/javascripts/jquery-1.10.2.js"></script>
     <script src="/javascripts/bootstrap.js"></script>
 </head>
-<body style="background-image: url('/background.jpg')">
+<body style="background-image: url('/background.jpg');  background-repeat: no-repeat;    background-attachment: fixed;">
 <header>
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -42,7 +42,10 @@
     </div>
 </header>
 {{#if error }}
-    <h2 style="color: white;">{{error}}</h2>
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 alert alert-danger" role="alert">
+        <strong>Oh, snap!</strong> <h2 style="color: white;">{{error}}</h2>
+    </div>
+
 {{/if}}
 {{{body}}}
 </body>
